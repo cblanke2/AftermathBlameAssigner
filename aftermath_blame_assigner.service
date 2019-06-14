@@ -1,0 +1,12 @@
+[Unit]
+Description=Aftermath Blame Assigner
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/AftermathBlameAssigner
+ExecStart=/usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py
+
+[Install]
+WantedBy=multi-user.target
