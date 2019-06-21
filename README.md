@@ -24,7 +24,8 @@ The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script 
     * swap_max → max swap utilization percent (default is 90)
     * log_time → how many seconds to wait between logging high load events (default is 1)
 * Manually start the script (or reboot the server)
-    * `sudo python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &`
+    * If you used systemd → `sudo systemctl restart aftermath_blame_assigner.service`
+    * If you used crontab → `sudo python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &`
 
 
 #### Check the log
