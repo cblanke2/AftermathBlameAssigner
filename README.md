@@ -1,6 +1,6 @@
 # Aftermath Blame Assigner
 
-The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script for logging resource intensive processes on Linux servers, written in Python3. Although it _can_ run on any Unix-like OS with python3 (and it's other dependencies) installed, some features may not work; for example, the disk I/O and most intensive processes fail to log on macOS (and presumably on any OS using \*BSD style commands).
+The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script for logging resource intensive processes on Linux servers, written in Python3. Although it _can_ run on any Unix-like OS with python3 (and it's other dependencies) installed, some features may not work; for example, the disk I/O and most intensive processes fail to log on \*BSD-based OSs (such as FreeBSD and macOS).
 
 #### Install and configure the script
 * Ensure all the dependencies for the script are installed
@@ -11,9 +11,9 @@ The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script 
     * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git`
     * Update the script by running →  `cd /opt/AftermathBlameAssigner && sudo git pull`
 * Set the script to run at reboot
-    * Install and enable the systemd service file _(If you're running a Linux distro with systemd, use this)_
+    * Install and enable the systemd service file _(This will work on any Linux distro with systemd)_
         * `sudo cp ./aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service`
-    * Or add an entry into crontab to run the script on reboot _(If your distro doesn't have systemd, or you're running a non-Linux Unix-like OS, use this)_
+    * Or add an entry into crontab to run the script on reboot _(This will work on most any UNIX-like OS, but not CentOS)_
         * Run → `sudo crontab -e`
         * Add this to the end of the file →  `@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py & `
 * Change any of the script’s variables
