@@ -11,6 +11,7 @@ The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script 
     * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git`
     * Update the script by running →  `cd /opt/AftermathBlameAssigner && sudo git pull`
 * Set the script to run at reboot
+    * Be sure to check where python3 is installed before doing this with `which python3`. Most of the time it's `/usr/bin/python3`, or `/usr/local/bin/python3` but linked to `/usr/bin/python3`. Adjust the service file or crontab entry accordingly. 
     * Install and enable the systemd service file _(This will work on any Linux distro with systemd)_
         * `sudo cp ./aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service`
     * Or add an entry into crontab to run the script on reboot _(This will work on most any UNIX-like OS, but not CentOS)_
