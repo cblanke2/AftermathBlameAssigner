@@ -8,7 +8,7 @@ The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script 
     * **Arch, Manjaro, etc.** → `sudo pacman -S --noconfirm gcc git python python-pip sysstat  && sudo pip3 install psutil`
     * **CentOS, RHEL, etc.** → `sudo yum -y install epel-release gcc git && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil`
 * Install “Aftermath Blame Assigner” on the server in `/opt/AftermathBlameAssigner`
-    * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git`
+    * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner`
     * Update the script by running →  `cd /opt/AftermathBlameAssigner && sudo git pull`
 * Set the script to run at reboot
     * Be sure to check where python3 is installed before doing this with `which python3`. Most of the time it's `/usr/bin/python3`, but sometime's it's `/usr/local/bin/python3` (which may or may not be linked to `/usr/bin/python3`). Just double check and adjust the service file or crontab entry accordingly. 
