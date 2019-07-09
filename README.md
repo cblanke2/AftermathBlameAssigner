@@ -19,7 +19,7 @@ The installation of Aftermath Blame Assigner on **CentOS 7x+**, **Ubuntu 18x+**,
         * `sudo cp ./aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service`
     * Or add an entry into crontab to run the script on reboot _(This will work on most any UNIX-like OS, but not CentOS)_
         * Run → `sudo crontab -e`
-        * Add this to the end of the file →  `@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py & 
+        * Add this to the end of the file →  `@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py & `
 * Manually start the script (or reboot the server)
     * If you used systemd → `sudo systemctl restart aftermath_blame_assigner.service`
     * If you used cron → `sudo python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &`
