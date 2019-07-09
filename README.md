@@ -13,7 +13,7 @@ The installation of Aftermath Blame Assigner on **CentOS 7x+**, **Ubuntu 18x+**,
     * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner`
       * This repo is mirrored on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
     * Update the script by running →  `cd /opt/AftermathBlameAssigner && sudo git pull`
-    * Some OSs don't have an `/opt` dir, and adjust the service file or crontab entry according to where you install it.
+    * Some OSs don't have an `/opt` dir, so just adjust the service file or crontab entry according to where you install it.
 * Set the script to run at reboot
     * Be sure to check where python3 is installed before doing this with `which python3`. Most of the time it's `/usr/bin/python3`, but sometimes it's `/usr/local/bin/python3` (which may or may not be linked to `/usr/bin/python3`). Just double check and adjust the service file or crontab entry accordingly. 
     * Install and enable the systemd service file _(This will work on any Linux distro with systemd)_
