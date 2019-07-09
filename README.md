@@ -6,7 +6,7 @@ The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script 
 * Ensure all the dependencies for the script are installed
     * **Ubuntu, Debian, etc.** → `sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil`
     * **Arch, Manjaro, etc.** → `sudo pacman -S --noconfirm gcc git python python-pip sysstat  && sudo pip3 install psutil`
-    * **CentOS, RHEL, etc.** → `sudo yum -y install epel-release gcc git && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil`
+    * **CentOS, RHEL, etc.** → `sudo yum -y install epel-release gcc git sysstat && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil`
 * Install “Aftermath Blame Assigner” on the server in `/opt/AftermathBlameAssigner`
     * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner`
       * This repo is mirrored on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
