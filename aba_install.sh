@@ -20,7 +20,6 @@ manual_instal (){
 }
 
 linux_distro (){
-	
 	#
 	# Install dependencies...
 	DISTRO_FAMILY=$(echo $(source /etc/os-release && echo $ID_LIKE))
@@ -43,7 +42,6 @@ linux_distro (){
 				sudo yum -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
 			fi
 		fi
-
 	#
 	# For debian-like distros
 	elif [[ $DISTRO_FAMILY == "debian" ]]; then
@@ -55,23 +53,18 @@ linux_distro (){
 	else
 		manual_install
 	fi
-	
 	#
 	# Clone the repo from GitHub into /opt/AftermathBlameAssigner
 	cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
-	
 	#
 	# Clone the repo from GitLab into /opt/AftermathBlameAssigner
 	# cd /opt && sudo git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
-
 	#
 	# Install the sytstemd service file
 	sudo cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service
-
 	#
 	# Start the script
 	sudo systemctl restart aftermath_blame_assigner.service
-	
 }
 
 get_os () {
@@ -86,6 +79,7 @@ get_os () {
 	else
 		echo "This script was not tested on your OS, and it may not run at all."
 	fi
+	#
 	exit 0
 }
 
