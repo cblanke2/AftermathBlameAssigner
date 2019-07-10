@@ -30,7 +30,7 @@ linux_distro (){
 	DISTRO_BRANCH=$(echo $(source /etc/os-release && echo $ID))
 	#
 	# For fedora-like distros
-	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora"]]; then
+	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora" ]]; then
 		# Fedora
 		if [[ $DISTRO_BRANCH == "fedora" ]]; then
 			sudo dnf -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
@@ -48,11 +48,11 @@ linux_distro (){
 		fi
 	#
 	# For debian-like distros
-	elif [[ $DISTRO_FAMILY == *"debian"* || $DISTRO_FAMILY == "ubuntu" || $DISTRO_BRANCH = "debian" ]]; then
+	elif [[ $DISTRO_FAMILY == *"debian"* || $DISTRO_FAMILY == "ubuntu" || $DISTRO_BRANCH == "debian" ]]; then
 		sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil
 	#
 	# For arch-like distros
-	elif [[ $DISTRO_FAMILY == "arch" || $DISTRO_FAMILY == "archlinux" || $DISTRO_BRANCH = "arch" ]]; then
+	elif [[ $DISTRO_FAMILY == "arch" || $DISTRO_FAMILY == "archlinux" || $DISTRO_BRANCH == "arch" ]]; then
 		sudo pacman -S --noconfirm gcc git python python-pip sysstat && sudo pip3 install psutil
 	else
 		manual_install
