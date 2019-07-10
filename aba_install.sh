@@ -66,8 +66,7 @@ linux_distro (){
 
 	#
 	# Install the sytstemd service file
-	cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
-
+	sudo cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service
 	#
 	# Start the script
 	sudo systemctl restart aftermath_blame_assigner.service
