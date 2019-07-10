@@ -45,6 +45,8 @@ linux_distro (){
 			elif [[ $RHEL_VERSION -ge 8 ]]; then
 				sudo dnf -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
 			fi
+		else
+			sudo yum -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
 		fi
 	#
 	# For debian-like distros
