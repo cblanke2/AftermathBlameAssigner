@@ -11,7 +11,8 @@ The installation of Aftermath Blame Assigner on **CentOS 7x+**, **Ubuntu 18x+**,
     * **Install with pip3** → `psutil`
 * Install “Aftermath Blame Assigner” on the server in `/opt/AftermathBlameAssigner`
     * Install the script by running → `cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner`
-      * This repo is mirrored on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
+      * This repo is hosted on GitHub at `https://github.com/cblanke2/AftermathBlameAssigner`
+      * And mirrored on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
     * Update the script by running →  `cd /opt/AftermathBlameAssigner && sudo git pull`
     * Some OSs don't have an `/opt` dir, so just adjust the service file or crontab entry according to where you install it.
 * Set the script to run at reboot
