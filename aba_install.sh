@@ -35,7 +35,7 @@ linux_distro (){
 		if [[ $DISTRO_BRANCH == "fedora" ]]; then
 			sudo dnf -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
 		# CentOS/RHEL
-		elif [[ $DISTRO_BRANCH == "centos"|| $DISTRO_BRANCH == "rhel" ]]; then
+		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
 			RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
 			if [[ $RHEL_VERSION -le 6 ]]; then
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
