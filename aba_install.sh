@@ -33,7 +33,7 @@ linux_distro (){
 	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora" ]]; then
 		# Fedora
 		if [[ $DISTRO_BRANCH == "fedora" ]]; then
-			sudo dnf -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
+			sudo dnf -y install gcc git python3 python3-devel python3-pip sysstat && sudo pip3 install psutil
 		# CentOS/RHEL
 		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
 			RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
@@ -43,10 +43,10 @@ linux_distro (){
 			elif [[ $RHEL_VERSION -eq 7 ]]; then
 				sudo yum -y install epel-release gcc git sysstat && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil
 			elif [[ $RHEL_VERSION -ge 8 ]]; then
-				sudo dnf -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
+				sudo dnf -y install gcc git python3 python3-devel python3-pip sysstat && sudo pip3 install psutil
 			fi
 		else
-			sudo yum -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
+			sudo yum -y install gcc git python3 python3-devel python3-pip sysstat && sudo pip3 install psutil
 		fi
 	#
 	# For debian-like distros
