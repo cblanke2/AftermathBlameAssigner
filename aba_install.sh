@@ -1,11 +1,13 @@
 #!/bin/bash
 
-manual_linux_install (){
-	echo "Your OS has not been tested with this script, so you will have to manually install it"
-	echo "Install these packages with your package manager: gcc git python3 python3-pip sysstat"
-	echo "Then run 'sudo pip3 install psutil'"
+manual_instal (){
+	echo "Your distro was not tested with this script, but you may be able to install the Aftermath Blame Assigner manually"
+	echo ""
+	echo "Install these packages with your package manager: 'gcc git python3 python3-pip sysstat'"
+	echo "Install this package with pip3: 'psutil'"
 	echo ""
 	echo "Clone the repo using: 'cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
+	echo "or if you prefer GitLab: 'cd /opt && sudo git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
 	echo ""
 	echo "Set the script to run at reboot, using either cron or systemd"
 	echo "\tFor systemd, run this: 'sudo cp ./aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service'"
@@ -17,57 +19,74 @@ manual_linux_install (){
 	exit 1
 }
 
-find_linux (){
-	OS_NAME=$(echo $(cat /etc/os-release | grep -e 'ID_LIKE=' | cut -d= -f2- | cut -d\" -f2- | cut -d\" -f1))
-
-	# If CentOS/RHEL (WILL NOT WORK ON FEDORA)
-	if [ "$OS_NAME" = "rhel fedora" ]; then
-		CENTOS_VERSION=$(echo $(cat /etc/os-release | grep -e 'VERSION_ID=' | cut -d= -f2- | cut -d\" -f2- | cut -d\" -f1))
-		# CentOS/RHEL 7
-		if [ "$CENTOS_VERSION" = "7" ]; then
-        		sudo yum -y install epel-release gcc git sysstat && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil
-		# CentOS/RHEL 8
-		elif [ "$CENTOS_VERSION" = "8" ]; then
-			sudo yum -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
-		else
-			echo "This script will not work on CentOS/RHEL 6x and below"
-			exit 1
+linux_distro (){
+	
+	#
+	# Install dependencies...
+	DISTRO_FAMILY=$(echo $(source /etc/os-release && echo $ID_LIKE))
+	#
+	# For fedora-like distros
+	if [[ $DISTRO_FAMILY == *"fedora"* ]]; then
+		RHEL_BRANCH=$(echo $(source /etc/os-release && echo $ID))
+		if [[ $RHEL_BRANCH == "fedora" ]]; then
+			# FEDORA
+			manual_install
+		# CentOS/RHEL
+		elif [[ $RHEL_BRANCH == "centos"|| $RHEL_BRANCH == "rhel" ]]; then
+			RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
+			if [[ $RHEL_VERSION -le 6 ]]; then
+				echo "This script is not compatible with CentOS/RHEL 6x and below"
+				exit 1
+			elif [[ $RHEL_VERSION -eq 7 ]]; then
+				sudo yum -y install epel-release gcc git sysstat && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil
+			elif [[ $RHEL_VERSION -ge 8 ]]; then
+				sudo yum -y install gcc git python3 python3-devel pip3 sysstat && sudo pip3 install psutil
+			fi
 		fi
-	# If Ubuntu/Debian
-	elif [ "$OS_NAME" = "debian" ]; then
-        	sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil
-	# If Arch/Manjaro
-	elif [ "$OS_NAME" = "arch" ]; then
-        	sudo pacman -S --noconfirm gcc git python python-pip sysstat && sudo pip3 install psutil
-	else
-		manual_linux_install
-	fi
 
-	# Clone the repo
+	#
+	# For debian-like distros
+	elif [[ $DISTRO_FAMILY == "debian" ]]; then
+		sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil
+	#
+	# For arch-like distros
+	elif [[ $DISTRO_FAMILY == "arch" ]]; then
+		sudo pacman -S --noconfirm gcc git python python-pip sysstat && sudo pip3 install psutil
+	else
+		manual_install
+	fi
+	
+	#
+	# Clone the repo from GitHub into /opt/AftermathBlameAssigner
+	cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
+	
+	#
+	# Clone the repo from GitLab into /opt/AftermathBlameAssigner
+	# cd /opt && sudo git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
+
+	#
+	# Install the sytstemd service file
 	cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
 
-	# Set the script to run at reboot using systemd
-	sudo cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service
-
-	# restart the script
+	#
+	# Start the script
 	sudo systemctl restart aftermath_blame_assigner.service
-
+	
 }
 
-find_os (){
-	OS_TYPE=$(echo $(uname))
-	
-	if [ "$OS_TYPE" = "Linux" ]; then
-		find_linux
-	elif [ "$OS_TYPE" = "Darwin" ] || [ "$OS_TYPE" = "FreeBSD" ]; then
-		echo "This script has been tested on your OS, but it was written with Linux in mind so many features DO NOT WORK."
-		echo "The script will still run, but it is limitedly functional, and requires more care to manually install. "
-		echo "If you want to install it (which is NOT RECOMMENDED), please consult your SysAdmin."
+get_os () {
+	OS_TYPE=$(echo $(uname -s))
+	#
+	if [[ $OS_TYPE == *"Linux"* ]]; then
+		linux_distro
+	elif [[ $OS_TYPE == "Darwin" || $OS_TYPE == *"BSD"* ]]; then
+		echo "This script will, in theory, install on your OS. However, because it was written"
+		echo "with Linux in mind many features will not work. Feel free to edit the script to"
+		echo "make it work, but you will need to install it manually."
 	else
-		echo "This script was not tested on your OS, and will probably not install/work at all."
-		echo "If you want to install it (which is NOT RECOMMENDED), please consult your SysAdmin."
+		echo "This script was not tested on your OS, and it may not run at all."
 	fi
 	exit 0
 }
 
-find_os
+get_os
