@@ -28,8 +28,8 @@ linux_distro (){
 	# For fedora-like distros
 	if [[ $DISTRO_FAMILY == *"fedora"* ]]; then
 		RHEL_BRANCH=$(echo $(source /etc/os-release && echo $ID))
+		# Fedora
 		if [[ $RHEL_BRANCH == "fedora" ]]; then
-			# FEDORA
 			manual_install
 		# CentOS/RHEL
 		elif [[ $RHEL_BRANCH == "centos"|| $RHEL_BRANCH == "rhel" ]]; then
@@ -67,6 +67,7 @@ linux_distro (){
 	#
 	# Install the sytstemd service file
 	sudo cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service
+
 	#
 	# Start the script
 	sudo systemctl restart aftermath_blame_assigner.service
