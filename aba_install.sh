@@ -34,7 +34,7 @@ linux_distro (){
 	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora" ]]; then
 		# Fedora
 		if [[ $DISTRO_BRANCH == "fedora" ]]; then
-			dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install --user psutil
+			dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
 		# CentOS/RHEL
 		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
 			RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
@@ -42,12 +42,12 @@ linux_distro (){
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
 			elif [[ $RHEL_VERSION -eq 7 ]]; then
-				yum -y install epel-release gcc git sysstat && yum -y install python36 python36-devel && curl https://bootstrap.pypa.io/get-pip.py | python3 && /usr/local/bin/pip3 install --user psutil
+				yum -y install epel-release gcc git sysstat && yum -y install python36 python36-devel && curl https://bootstrap.pypa.io/get-pip.py | python3 && /usr/local/bin/pip3 install psutil
 			elif [[ $RHEL_VERSION -ge 8 ]]; then
-				dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install --user psutil
+				dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
 			fi
 		else
-			yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install --user psutil
+			yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
 		fi
 	#
 	# For debian-like distros
@@ -55,7 +55,7 @@ linux_distro (){
 		if [[ $SYSTEMD_EXISTS == "false" ]]; then
 			manual_install
 		else
-			apt-get -y install gcc git python3 python3-dev python3-pip sysstat && pip3 install --user psutil
+			apt-get -y install gcc git python3 python3-dev python3-pip sysstat && pip3 install psutil
 		fi
 	#
 	# For arch-like distros
@@ -63,7 +63,7 @@ linux_distro (){
 		if [[ $SYSTEMD_EXISTS == "false" ]]; then
 			manual_install
 		else
-			pacman -S --noconfirm gcc git python python-pip sysstat && pip3 install --user psutil
+			pacman -S --noconfirm gcc git python python-pip sysstat && pip3 install psutil
 		fi
 	else
 		manual_install
