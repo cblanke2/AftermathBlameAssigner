@@ -10,8 +10,10 @@ manual_instal (){
 	echo ""
 	echo "Install this package with pip3: 'psutil'"
 	echo ""
-	echo "Clone the repo using: 'cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
-	echo "or if you prefer GitLab: 'cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
+	echo "Clone the repo from either"
+	echo "\t GitLab: 'cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
+	echo "or"
+	echo "\t GitHub: 'cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
 	echo ""
 	echo "Set the script to run at reboot, using either cron or systemd"
 	echo "\tFor systemd, run this: 'cp ./aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service'"
@@ -75,10 +77,10 @@ linux_distro (){
 	fi
 	#
 	# Clone the repo from GitHub into /opt/AftermathBlameAssigner
-	cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
+	# cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
 	#
 	# Clone the repo from GitLab into /opt/AftermathBlameAssigner
-	# cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
+	cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
 	#
 	# Install the sytstemd service file
 	cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service
