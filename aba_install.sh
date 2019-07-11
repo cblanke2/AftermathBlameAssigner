@@ -8,18 +8,18 @@ manual_instal (){
 	echo ""
 	echo "Install these packages with your package manager: 'gcc git python3 python3-pip sysstat'"
 	echo ""
-	echo "Install this package with (sudo) pip3: 'psutil'"
+	echo "Install this package with pip3: 'psutil'"
 	echo ""
-	echo "Clone the repo using: 'cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
-	echo "or if you prefer GitLab: 'cd /opt && sudo git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
+	echo "Clone the repo using: 'cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
+	echo "or if you prefer GitLab: 'cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
 	echo ""
 	echo "Set the script to run at reboot, using either cron or systemd"
-	echo "\tFor systemd, run this: 'sudo cp ./aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service'"
-	echo "\tFor cron, run 'sudo crontab -e' and add this line to the end: '@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &'"
+	echo "\tFor systemd, run this: 'cp ./aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service'"
+	echo "\tFor cron, run 'crontab -e' and add this line to the end: '@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &'"
 	echo ""
 	echo "Then manually start the script"
-	echo "\tsystemd: 'sudo systemctl restart aftermath_blame_assigner.service'"
-	echo "\tcron: 'sudo python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &'"
+	echo "\tsystemd: 'systemctl restart aftermath_blame_assigner.service'"
+	echo "\tcron: 'python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &'"
 	exit 1
 }
 
@@ -34,7 +34,7 @@ linux_distro (){
 	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora" ]]; then
 		# Fedora
 		if [[ $DISTRO_BRANCH == "fedora" ]]; then
-			sudo dnf -y install gcc git python3 python3-devel python3-pip sysstat && sudo pip3 install psutil
+			dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install --user psutil
 		# CentOS/RHEL
 		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
 			RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
@@ -42,12 +42,12 @@ linux_distro (){
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
 			elif [[ $RHEL_VERSION -eq 7 ]]; then
-				sudo yum -y install epel-release gcc git sysstat && sudo yum -y install python36 python36-devel && sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python3 && sudo /usr/local/bin/pip3 install psutil
+				yum -y install epel-release gcc git sysstat && yum -y install python36 python36-devel && curl https://bootstrap.pypa.io/get-pip.py | python3 && /usr/local/bin/pip3 install --user psutil
 			elif [[ $RHEL_VERSION -ge 8 ]]; then
-				sudo dnf -y install gcc git python3 python3-devel python3-pip sysstat && sudo pip3 install psutil
+				dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install --user psutil
 			fi
 		else
-			sudo yum -y install gcc git python3 python3-devel python3-pip sysstat && sudo pip3 install psutil
+			yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install --user psutil
 		fi
 	#
 	# For debian-like distros
@@ -55,7 +55,7 @@ linux_distro (){
 		if [[ $SYSTEMD_EXISTS == "false" ]]; then
 			manual_install
 		else
-			sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil
+			apt-get -y install gcc git python3 python3-dev python3-pip sysstat && pip3 install --user psutil
 		fi
 	#
 	# For arch-like distros
@@ -63,23 +63,23 @@ linux_distro (){
 		if [[ $SYSTEMD_EXISTS == "false" ]]; then
 			manual_install
 		else
-			sudo pacman -S --noconfirm gcc git python python-pip sysstat && sudo pip3 install psutil
+			pacman -S --noconfirm gcc git python python-pip sysstat && pip3 install --user psutil
 		fi
 	else
 		manual_install
 	fi
 	#
 	# Clone the repo from GitHub into /opt/AftermathBlameAssigner
-	cd /opt && sudo git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
+	cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
 	#
 	# Clone the repo from GitLab into /opt/AftermathBlameAssigner
-	# cd /opt && sudo git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
+	# cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner
 	#
 	# Install the sytstemd service file
-	sudo cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && sudo chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl enable aftermath_blame_assigner.service
+	cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service
 	#
 	# Start the script
-	sudo systemctl restart aftermath_blame_assigner.service
+	systemctl restart aftermath_blame_assigner.service
 }
 
 get_os () {
