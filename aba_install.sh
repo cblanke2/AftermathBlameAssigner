@@ -28,6 +28,7 @@ linux_distro (){
 	# Install dependencies...
 	DISTRO_FAMILY=$(echo $(source /etc/os-release && echo $ID_LIKE))
 	DISTRO_BRANCH=$(echo $(source /etc/os-release && echo $ID))
+	SYSTEMD_EXISTS=$(pidof systemd && echo "" || echo "false")
 	#
 	# For fedora-like distros
 	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora" ]]; then
@@ -51,11 +52,19 @@ linux_distro (){
 	#
 	# For debian-like distros
 	elif [[ $DISTRO_FAMILY == *"debian"* || $DISTRO_FAMILY == "ubuntu" || $DISTRO_BRANCH == "debian" ]]; then
-		sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil
+		if [[ $SYSTEMD_EXISTS == "false" ]]; then
+			manual_install
+		else
+			sudo apt-get -y install gcc git python3 python3-dev python3-pip sysstat && sudo pip3 install psutil
+		fi
 	#
 	# For arch-like distros
 	elif [[ $DISTRO_FAMILY == "arch" || $DISTRO_FAMILY == "archlinux" || $DISTRO_BRANCH == "arch" ]]; then
-		sudo pacman -S --noconfirm gcc git python python-pip sysstat && sudo pip3 install psutil
+		if [[ $SYSTEMD_EXISTS == "false" ]]; then
+			manual_install
+		else
+			sudo pacman -S --noconfirm gcc git python python-pip sysstat && sudo pip3 install psutil
+		fi
 	else
 		manual_install
 	fi
