@@ -32,19 +32,24 @@ linux_distro (){
 	#
 	# For fedora-like distros
 	if [[ $DISTRO_FAMILY == *"fedora"* || $DISTRO_BRANCH == "fedora" ]]; then
+		RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
 		# Fedora
 		if [[ $DISTRO_BRANCH == "fedora" ]]; then
-			dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
+			if [[ $RHEL_VERSION -ge 18 ]]; then
+				dnf -y install git python3 python3-psutil sysstat
+			else
+				echo "This script is not compatible with Fedora 17x and below"
+				exit 1
+			fi
 		# CentOS/RHEL
 		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
-			RHEL_VERSION=$(echo $(source /etc/os-release && echo $VERSION_ID))
 			if [[ $RHEL_VERSION -le 6 ]]; then
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
 			elif [[ $RHEL_VERSION -eq 7 ]]; then
 				yum -y install epel-release gcc git sysstat && yum -y install python36 python36-devel && curl https://bootstrap.pypa.io/get-pip.py | python3 && /usr/local/bin/pip3 install psutil
 			elif [[ $RHEL_VERSION -ge 8 ]]; then
-				dnf -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
+				dnf -y install git python3 python3-psutil sysstat
 			fi
 		else
 			yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
@@ -55,7 +60,7 @@ linux_distro (){
 		if [[ $SYSTEMD_EXISTS == "false" ]]; then
 			manual_install
 		else
-			apt-get -y install gcc git python3 python3-dev python3-pip sysstat && pip3 install psutil
+			apt-get -y install git python3 python3-psutil sysstat
 		fi
 	#
 	# For arch-like distros
@@ -63,7 +68,7 @@ linux_distro (){
 		if [[ $SYSTEMD_EXISTS == "false" ]]; then
 			manual_install
 		else
-			pacman -S --noconfirm gcc git python python-pip sysstat && pip3 install psutil
+			pacman -S --noconfirm git python python-psutil sysstat
 		fi
 	else
 		manual_install
