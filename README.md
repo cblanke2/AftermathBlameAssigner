@@ -5,7 +5,7 @@ The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script 
 #### Automatic Installlation
 The installation of Aftermath Blame Assigner on **CentOS 7x+**, **Ubuntu 18x+**, and **Manjaro 18x+** can be automated using the _aba_install.sh_ bash script. There should be no issues running the install script on (up to date) distros closely related to **CentOS**, **Ubuntu**, and **Manjaro** (such as as **RHEL**, **Debian**, and **Arch** respectively), but this has not been extensively tested.
 
-To install Aftermath Blame Assigner on these distros, run the installer script using `wget https://raw.githubusercontent.com/cblanke2/AftermathBlameAssigner/master/aba_install.sh && sudo bash aba_install.sh`. On any other distro, please follow the manual install instructions below. Installation on any other UNIX-like OS, such as \*BSD or macOS will have to be done manually as well, but because of the limited functionality of the script on these OSs installation is not recommended.
+To install Aftermath Blame Assigner on these distros, run the installer script using `wget https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_install.sh && sudo bash aba_install.sh` or `wget https://raw.githubusercontent.com/cblanke2/AftermathBlameAssigner/master/aba_install.sh && sudo bash aba_install.sh`. On any other distro, please follow the manual install instructions below. Installation on any other UNIX-like OS, such as \*BSD or macOS will have to be done manually as well, but because of the limited functionality of the script on these OSs installation is not recommended.
 
 #### Manual Installlation
 * Ensure all the dependencies for the script are installed
@@ -13,8 +13,8 @@ To install Aftermath Blame Assigner on these distros, run the installer script u
     * **Install with pip3** → `psutil`
 * Install “Aftermath Blame Assigner” on the server in `/opt/AftermathBlameAssigner`
     * Install the script by running → `cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner`
-      * This repo is hosted on GitHub at `https://github.com/cblanke2/AftermathBlameAssigner`
-      * And mirrored on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
+      * This repo is hosted on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
+      * And mirrored on GitHub at `https://github.com/cblanke2/AftermathBlameAssigner`
     * Update the script by running →  `cd /opt/AftermathBlameAssigner && git pull`
     * Some OSs don't have an `/opt` dir, so just adjust the service file or crontab entry according to where you install it.
 * Set the script to run at reboot
