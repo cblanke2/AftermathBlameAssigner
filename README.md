@@ -22,7 +22,7 @@ To install Aftermath Blame Assigner on these distros, run the installer script u
     * Install and enable the systemd service file _(This will work on any Linux distro with systemd)_
         * `cp ./aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service`
     * Or add an entry into crontab to run the script on reboot _(This will work on most any UNIX-like OS, but not CentOS)_
-        * Run → `sudo crontab -e`
+        * Run → `crontab -e`
         * Add this to the end of the file →  `@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py & `
 * Manually start the script (or reboot the server)
     * If you used systemd → `systemctl restart aftermath_blame_assigner.service`
