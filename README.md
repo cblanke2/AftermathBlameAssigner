@@ -51,25 +51,25 @@ To install Aftermath Blame Assigner on these distros, run the installer script u
 #### Uninstalling
 
 To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_ follow these instructions.
-* Uninstall the systemd service → `systemctl stop aftermath_blame_assigner.service && systemctl disable aftermath_blame_assigner.service && rm /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl reset-failed`
-* Remove the installation → `rm -rf /opt/AftermathBlameAssigner`
-* Remove the log if desired → `rm /var/log/aftermath_blame_assigner.log`
+* Uninstall the systemd service → `sudo systemctl stop aftermath_blame_assigner.service && sudo systemctl disable aftermath_blame_assigner.service && sudo rm /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl reset-failed`
+* Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
+* Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
 * If pip3 was installed, remove any uneeded pip3 packages
-    * Run `pip3 list --not-required`' to list pip3 packages nothing depends on
-    * Then run `pip3 uninstall -y <package-names>` to remove it
+    * Run `sudo pip3 list --not-required`' to list pip3 packages nothing depends on
+    * Then run `sudo pip3 uninstall -y <package-names>` to remove it
 * Remove any unneeded dependencies (this varies by OS)
 
 #### CentOS/RHEL 7 to CentOS/RHEL 8
 
 The way the installation was handled on CentOS/RHEL 7 was admittedly hacky, so to fix it follow these instuctions.
-* Uninstall the systemd service → `systemctl stop aftermath_blame_assigner.service && systemctl disable aftermath_blame_assigner.service && rm /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl reset-failed`
-* Remove the installation → `rm -rf /opt/AftermathBlameAssigner`
-* Remove the log if desired → `rm /var/log/aftermath_blame_assigner.log`
+* Uninstall the systemd service → `sudo systemctl stop aftermath_blame_assigner.service && sudo systemctl disable aftermath_blame_assigner.service && sudo rm /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl reset-failed`
+* Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
+* Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
 * Remove any uneeded pip3 packages
-    * Run `/usr/local/bin/pip3 list --not-required`' to list pip3 packages nothing depends on
-    * Then run `/usr/local/bin/pip3 uninstall -y <package-names>` to remove it
-      * Unless you have additional pip3 packages, you should be able to run `/usr/local/bin/pip3 uninstall -y psutil && /usr/local/bin/pip3 uninstall -y setuptools && /usr/local/bin/pip3 uninstall -y wheel && /usr/local/bin/pip3 uninstall -y pip`
-* Remove any unneeded dependencies → `yum -y remove python36; rpm -e python36-devel; rpm -e epel-release; rpm -e gcc; yum history sync; yum clean all; yum -y autoremove; hash -r`
+    * Run `sudo /usr/local/bin/pip3 list --not-required`' to list pip3 packages nothing depends on
+    * Then run `sudo /usr/local/bin/pip3 uninstall -y <package-names>` to remove it
+      * Unless you have additional pip3 packages, you should be able to run `sudo /usr/local/bin/pip3 uninstall -y psutil setuptools wheel pip`
+* Remove any unneeded dependencies → `sudo yum -y remove python36; sudo rpm -e python36-devel; sudo rpm -e epel-release; sudo rpm -e gcc; sudo yum history sync; sudo yum clean all; sudo yum -y autoremove; hash -r`
     * Both _python36_ and _python36-devel_ were installed from the _epel-release_ repo (which is to be removed), but in CentOS/RHEL 8, _python3_ and _python3-devl_ will be in the standard repos. _python36_ will be replaced with _python3_ from the standard repos through the install script, but as _python36-devel_ is not a dependency it will not be reinstalled.
     * If any of these packages, including the version of _python3_ from _epel-release_ repo are a dependency for something else, they will have to be manually removed and replaced after upgrading.
 * After upgrading just run the installer script again to reinstall → `curl https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_install.sh > aba_install.sh && sudo bash aba_install.sh`
