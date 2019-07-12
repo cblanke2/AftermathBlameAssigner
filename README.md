@@ -55,7 +55,7 @@ To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_ 
 * Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
 * Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
 * If pip3 was installed, remove any uneeded pip3 packages
-    * Run `sudo pip3 list --not-required`' to list pip3 packages nothing depends on
+    * Run `sudo pip3 list --not-required` to list pip3 packages nothing depends on
     * Then run `sudo pip3 uninstall -y <package-names>` to remove it
 * Remove any unneeded dependencies (this varies by OS)
 
@@ -66,7 +66,7 @@ The way the installation was handled on CentOS/RHEL 7 was admittedly hacky, so t
 * Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
 * Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
 * Remove any uneeded pip3 packages
-    * Run `sudo /usr/local/bin/pip3 list --not-required`' to list pip3 packages nothing depends on
+    * Run `sudo /usr/local/bin/pip3 list --not-required` to list pip3 packages nothing depends on
     * Then run `sudo /usr/local/bin/pip3 uninstall -y <package-names>` to remove it
       * Unless you have additional pip3 packages, you should be able to run `sudo /usr/local/bin/pip3 uninstall -y psutil setuptools wheel pip`
 * Remove any unneeded dependencies → `sudo rpm -e python36-devel python36-libs python36; sudo rpm -e gcc; sudo yum history sync; sudo yum clean all; sudo yum -y autoremove; hash -r`
