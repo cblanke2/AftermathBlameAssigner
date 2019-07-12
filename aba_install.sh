@@ -3,8 +3,8 @@
 # Written by: Chris Blankenship <chrisb@reclaimhosting.com>
 #
 
-manual_instal (){
-	echo "Your distro was not tested with this script, but you may be able to install the Aftermath Blame Assigner manually"
+manual_install (){
+	echo "Your distro was not tested with this script, but you may be able to l the Aftermath Blame Assigner manually"
 	echo ""
 	echo "Install these packages with your package manager: 'gcc git python3 python3-pip sysstat'"
 	echo ""
