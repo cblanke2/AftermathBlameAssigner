@@ -56,7 +56,7 @@ To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_ 
 * Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
 * If pip3 was installed, remove any uneeded pip3 packages
     * Run `sudo pip3 list --not-required` to list pip3 packages nothing depends on
-    * Then run `sudo pip3 uninstall -y <package-names>` to remove it
+    * Then run `sudo pip3 uninstall -y <package-names>` to remove it/them
 * Remove any unneeded dependencies (this varies by OS)
 
 #### CentOS/RHEL 7 to CentOS/RHEL 8
@@ -67,7 +67,7 @@ The way the installation was handled on CentOS/RHEL 7 was admittedly hacky, so t
 * Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
 * Remove any uneeded pip3 packages
     * Run `sudo /usr/local/bin/pip3 list --not-required` to list pip3 packages nothing depends on
-    * Then run `sudo /usr/local/bin/pip3 uninstall -y <package-names>` to remove it
+    * Then run `sudo /usr/local/bin/pip3 uninstall -y <package-names>` to remove it/them
       * Unless you have additional pip3 packages, you should be able to run `sudo /usr/local/bin/pip3 uninstall -y psutil setuptools wheel pip`
 * Remove any unneeded dependencies → `sudo rpm -e python36-devel python36-libs python36; sudo rpm -e gcc; sudo yum history sync; sudo yum clean all; sudo yum -y autoremove; hash -r`
     * Both _python36_ and _python36-devel_ were installed from the _epel-release_ repo (which is to be removed), but in CentOS/RHEL 8, _python3_ and _python3-devl_ will be in the standard repos. _python36_ will be replaced with _python3_ from the standard repos through the install script, but as _python36-devel_ is not a dependency it will not be reinstalled.
