@@ -6,10 +6,10 @@
 
 user_count = 5
 ps_count = 15
-cpu_max = 90
-ram_max = 90
-swap_max = 90
-log_time = 1
+cpu_max = 95
+ram_max = 95
+swap_max = 95
+log_time = 5
 
 import psutil, socket, subprocess, time, urllib.request
 
