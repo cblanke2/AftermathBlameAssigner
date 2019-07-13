@@ -7,6 +7,8 @@ The installation of Aftermath Blame Assigner on **CentOS 7x+**, **Ubuntu 18x+**,
 
 To install Aftermath Blame Assigner on these distros, run the installer script using `wget https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_install.sh && sudo bash aba_install.sh` (GitLab) or `wget https://raw.githubusercontent.com/cblanke2/AftermathBlameAssigner/master/aba_install.sh && sudo bash aba_install.sh` (GitHub). If _wget_ is not installed, you can use `curl https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_install.sh > aba_install.sh && sudo bash aba_install.sh` (GitLab) or `curl https://raw.githubusercontent.com/cblanke2/AftermathBlameAssigner/master/aba_install.sh > aba_install.sh && sudo bash aba_install.sh` (GitHub). On any other distro, please follow the manual install instructions below. Installation on any other UNIX-like OS, such as \*BSD or macOS will have to be done manually as well, but because of the limited functionality of the script on these OSs, installation is not recommended.
 
+The _aba_remote.sh_ script can handle installation, reinstallation, uninstallation, and updating of Aftermath Blame Assigner remotely. Just run `bash aba_remote.sh [install/reinstall/uninstall/update] <USER>@<SERVER>`. It's written with root access over ssh in mind (which is VERY insecure), but as long as your user account has proper privileges, you should run into no issues.
+
 #### Manual Installlation
 * Ensure all the dependencies for the script are installed
     * **Install these packages** → `git python3 python3-psutil sysstat`
@@ -69,7 +71,8 @@ The way the installation was handled on CentOS/RHEL 7 was admittedly hacky, so t
     * Run `sudo /usr/local/bin/pip3 list --not-required` to list pip3 packages nothing depends on
     * Then run `sudo /usr/local/bin/pip3 uninstall -y <package-names>` to remove it/them
       * Unless you have additional pip3 packages, you should be able to run `sudo /usr/local/bin/pip3 uninstall -y psutil setuptools wheel pip`
-* Remove any unneeded dependencies → `sudo rpm -e python36-devel python36-libs python36; sudo rpm -e epel-release; sudo rpm -e gcc; sudo yum history sync; sudo yum clean all; sudo yum -y autoremove; hash -r`
+* Remove any unneeded dependencies → `sudo rpm -e python36-devel python36-libs python36 epel-release; sudo yum history sync; sudo yum clean all; sudo yum -y autoremove; hash -r`
     * On CentOS 7, both _python36_ and _python36-devel_ had to be installed from the _epel-release_ repo (which this will remove). If you are reinstalling after upgrading, _python36_ will be replaced by _python3_ (from the standard repos) through the install script, but as _python36-devel_ is no longer a dependency it will not be reinstalled through the script.
     * If any of these packages listed for removal, including the version of _python3_ from _epel-release_ repo, are a dependency for something else, they will have to be manually removed and replaced after upgrading.
+    * 'gcc' and 'git' were also installed, but because these are from the standard repo and may have been explicitly installed by the user, so you will have to remove these manually
 * After upgrading just run the installer script again to reinstall → `curl https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_install.sh > aba_install.sh && sudo bash aba_install.sh`
