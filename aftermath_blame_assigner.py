@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-#  
-#  Written by: Chris Blankenship <chrisb@reclaimhosting.com>
+# 
+# aftermath_blame_assigner.py
+# 	logger of resource intensive processes 
+#
+# Written by: Chris Blankenship <chrisb@reclaimhosting.com>
 #
 
 user_count = 5
