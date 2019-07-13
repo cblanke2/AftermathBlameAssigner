@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+# aba_install.sh
+#	installation script for Aftermath Blame Assigner
+#
 # Written by: Chris Blankenship <chrisb@reclaimhosting.com>
 #
 
