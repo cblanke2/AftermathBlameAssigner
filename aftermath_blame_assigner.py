@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-#
-#  aftermath_blame_assigner.py
 #  
 #  Written by: Chris Blankenship <chrisb@reclaimhosting.com>
+#
 
 user_count = 5
 ps_count = 15
