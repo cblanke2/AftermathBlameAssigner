@@ -32,15 +32,15 @@ To install Aftermath Blame Assigner on these distros, run the installer script u
 #### Configure the scripts variables
 * user_count → how many users to log (default is 5)
 * ps_count → how many processes to log (default is 15)
-* cpu_max → max cpu utilization percent (default is 90)
-* ram_max → max ram utilization percent (default is 90)
-* swap_max → max swap utilization percent (default is 90)
-* log_time → how many seconds to wait between logging high load events (default is 1)
+* cpu_max → max cpu utilization percent (default is 95)
+* ram_max → max ram utilization percent (default is 95)
+* swap_max → max swap utilization percent (default is 95)
+* log_time → how many seconds to wait between logging high load events (default is 5)
 
 #### Check the log
 * The log is located at `/var/log/aftermath_blame_assigner.log`
 * The time and date of each reboot will be logged
-* When CPU, RAM, or Swap utilization hits 90% (by default) these things will be logged each second (by default):
+* When CPU, RAM, or Swap utilization hits 95% (by default) these things will be logged each 5 seconds (by default):
     * The time and date
     * The current load of the CPU, RAM, and Swap
     * The current disk usage, as well as the current disk I/O in kB/s
