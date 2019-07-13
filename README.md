@@ -9,8 +9,8 @@ To install Aftermath Blame Assigner on these distros, run the installer script u
 
 #### Manual Installlation
 * Ensure all the dependencies for the script are installed
-    * **Install with your OSs package manager** → `gcc git python3 python3-dev python3-pip sysstat`
-    * **Install with pip3 or your OSs package manager** → `psutil`
+    * **Install these packages** → `git python3 python3-psutil sysstat`
+    * If _psutil_ is not in your OS repos, install `gcc python3-dev python3-pip` and install it through pip3
 * Install “Aftermath Blame Assigner” on the server in `/opt/AftermathBlameAssigner`
     * Install the script by running → `cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner`
       * This repo is hosted on GitLab at `https://gitlab.com/cblanke2/AftermathBlameAssigner`
