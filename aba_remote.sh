@@ -1,6 +1,10 @@
 #!/bin/bash
 # 
-# Written by Chris Blankenship < chrisb@reclaimhosting.com >
+# aba_remote.sh
+# 	script to remotely install, reinstall, uninstall, and update Aftermath Blame Assigner
+#
+# Written by Chris Blankenship <chrisb@reclaimhosting.com>
+#
 
 
 update_script () {
