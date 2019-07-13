@@ -40,7 +40,7 @@ To install Aftermath Blame Assigner on these distros, run the installer script u
 #### Check the log
 * The log is located at `/var/log/aftermath_blame_assigner.log`
 * The time and date of each reboot will be logged
-* When CPU, RAM, or Swap utilization hits 95% (by default) these things will be logged each 5 seconds (by default):
+* When CPU, RAM, or Swap utilization hits 95% (by default) these things will be logged every 5 seconds (by default):
     * The time and date
     * The current load of the CPU, RAM, and Swap
     * The current disk usage, as well as the current disk I/O in kB/s
