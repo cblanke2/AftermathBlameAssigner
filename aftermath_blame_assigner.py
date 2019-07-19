@@ -84,7 +84,7 @@ def monitor():
 			ps_log()
 			subprocess.call('echo "===========================================================================" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 			subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
-	time.sleep(log_time)
+		time.sleep(log_time)
 	return 0
 
 def main():
