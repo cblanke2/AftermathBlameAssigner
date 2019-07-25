@@ -36,7 +36,7 @@ def ps_log():
 	#
 	subprocess.call('echo "---------------------------------------------------------------------------" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
-	ps_count_log = 'ps -Ao user,uid,pid,pcpu,pmem,start,time,comm --sort=-pcpu,-pmem | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
+	ps_count_log = 'ps -Aeo user,uid,pid,pcpu,pmem,start,time,comm,args=PATH --sort=-pcpu,-pmem | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
 	subprocess.call(ps_count_log, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
 	return 0
