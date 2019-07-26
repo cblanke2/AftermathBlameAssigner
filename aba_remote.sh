@@ -62,7 +62,7 @@ arg_parse () {
 		uninstall_script $2
 		install_script $2
 	elif [[ $1 == "systemd" ]]; then
-		update_script $2
+		update_systemd $2
 	elif [[ $1 == "uninstall" ]]; then
 		uninstall_script $2
 	elif [[ $1 == "update" ]]; then
