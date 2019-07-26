@@ -30,21 +30,7 @@ update_systemd() {
 }
 
 uninstall_script () {
-	echo 'systemctl stop aftermath_blame_assigner.service
-	systemctl disable aftermath_blame_assigner.service
-	rm /etc/systemd/system/aftermath_blame_assigner.service
-	systemctl daemon-reload
-	systemctl reset-failed
-	rm -rf /opt/AftermathBlameAssigner
-	rm /var/log/aftermath_blame_assigner.log
-	
-	[[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && rpm -q python36-psutil || [[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && [[ -f /usr/bin/pip3 ]] && [[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" psutil "* ]] &&  /usr/local/bin/pip3 uninstall -y psutil
-	[[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && rpm -q python36-psutil || [[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && [[ -f /usr/bin/pip3 ]] && [[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" setuptools "* ]] &&  /usr/local/bin/pip3 uninstall -y setuptools
-	[[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && rpm -q python36-psutil || [[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && [[ -f /usr/bin/pip3 ]] && [[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" wheel "* ]] &&  /usr/local/bin/pip3 uninstall -y wheel
-	[[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && rpm -q python36-psutil || [[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && [[ -f /usr/bin/pip3 ]] && [[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" pip "* ]] && /usr/local/bin/pip3 uninstall -y pip && rpm -e python36-devel python36-libs python36 epel-release && yum history sync && yum clean all && yum -y autoremove
-	[[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]] && [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]] && rpm -q python36-psutil && rpm -e python36 python36-libs python36-psutil epel-release && yum history sync && yum clean all && yum -y autoremove
-	
-	hash -r' | ssh $1
+	curl https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_uninstall.sh | ssh $1
 }
 
 install_script () {
