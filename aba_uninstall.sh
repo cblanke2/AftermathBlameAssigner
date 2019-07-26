@@ -7,7 +7,7 @@
 #
 
 uninstall_centos () {
-	if [[ -f /usr/bin/pip3 ]]; then
+	if [[ -f /usr/local/bin/pip3 ]]; then
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" psutil "* ]] && /usr/local/bin/pip3 uninstall -y psutil
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" setuptools "* ]] &&  /usr/local/bin/pip3 uninstall -y setuptools
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" wheel "* ]] &&  /usr/local/bin/pip3 uninstall -y wheel
