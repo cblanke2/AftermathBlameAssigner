@@ -7,6 +7,8 @@ Type=simple
 User=root
 WorkingDirectory=/opt/AftermathBlameAssigner
 ExecStart=/usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
