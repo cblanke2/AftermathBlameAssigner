@@ -60,19 +60,3 @@ To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_ 
     * Run `sudo pip3 list --not-required` to list pip3 packages nothing depends on
     * Then run `sudo pip3 uninstall -y <package-names>` to remove it/them
 * Remove any unneeded dependencies (this varies by OS)
-
-#### CentOS/RHEL 7 to CentOS/RHEL 8
-
-The way the installation was handled on CentOS/RHEL 7 was admittedly hacky, so to fix it follow these instuctions.
-* Uninstall the systemd service → `sudo systemctl stop aftermath_blame_assigner.service && sudo systemctl disable aftermath_blame_assigner.service && sudo rm /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl reset-failed`
-* Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
-* Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
-* Remove any uneeded pip3 packages
-    * Run `sudo /usr/local/bin/pip3 list --not-required` to list pip3 packages nothing depends on
-    * Then run `sudo /usr/local/bin/pip3 uninstall -y <package-names>` to remove it/them
-      * Unless you have additional pip3 packages, you should be able to run `sudo /usr/local/bin/pip3 uninstall -y psutil setuptools wheel pip`
-* Remove any unneeded dependencies → `sudo rpm -e python36-devel python36-libs python36 epel-release; sudo yum history sync; sudo yum clean all; sudo yum -y autoremove; hash -r`
-    * On CentOS 7, both _python36_ and _python36-devel_ had to be installed from the _epel-release_ repo (which this will remove). If you are reinstalling after upgrading, _python36_ will be replaced by _python3_ (from the standard repos) through the install script, but as _python36-devel_ is no longer a dependency it will not be reinstalled through the script.
-    * If any of these packages listed for removal, including the version of _python3_ from _epel-release_ repo, are a dependency for something else, they will have to be manually removed and replaced after upgrading.
-    * 'gcc' and 'git' were also installed, but because these are from the standard repo and may have been explicitly installed by the user, so you will have to remove these manually
-* After upgrading just run the installer script again to reinstall → `curl https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_install.sh > aba_install.sh && sudo bash aba_install.sh`
