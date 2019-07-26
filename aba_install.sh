@@ -9,7 +9,7 @@
 manual_install (){
 	echo "Your distro was not tested with this script, but you may be able to l the Aftermath Blame Assigner manually"
 	echo ""
-	echo "Install these packages with your package manager: 'gcc git python3 python3-psutil sysstat'"
+	echo "Install these packages with your package manager: 'git python3 python3-psutil sysstat'"
 	echo ""
 	echo "If psutil isn't in your OS repos, install pip3, and run 'pip3 install psutil'"
 	echo ""
