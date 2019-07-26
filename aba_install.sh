@@ -52,7 +52,7 @@ linux_distro (){
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
 			elif [[ $RHEL_VERSION -eq 7 ]]; then
-				yum -y install epel-release gcc git sysstat && yum -y install python36 python36-devel python36-pip && pip3 install psutil
+				yum -y install epel-release gcc git sysstat && yum -y install python36 python36-psutil
 			elif [[ $RHEL_VERSION -ge 8 ]]; then
 				dnf -y install git python3 python3-psutil sysstat
 			fi
