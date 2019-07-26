@@ -11,10 +11,10 @@ uninstall_centos () {
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" psutil "* ]] && /usr/local/bin/pip3 uninstall -y psutil
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" setuptools "* ]] &&  /usr/local/bin/pip3 uninstall -y setuptools
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" wheel "* ]] &&  /usr/local/bin/pip3 uninstall -y wheel
-		[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" pip "* ]] && /usr/local/bin/pip3 uninstall -y pip
+		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" pip "* ]] && /usr/local/bin/pip3 uninstall -y pip
 		rpm -e python36-devel python36-libs python36 epel-release
-	elif [[ rpm -q python36-psutil ]]; then
-		rpm -e python36 python36-libs python36-psutil epel-release
+	else
+		rpm -q python36-psutil && rpm -e python36 python36-libs python36-psutil epel-release
 	fi
 	yum history sync
 	yum clean all
