@@ -36,5 +36,7 @@ uninstall_general () {
 		fi
 	fi
 
-	hash -r' | ssh $1
+	hash -r
 }
+
+uninstall_general
