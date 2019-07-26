@@ -14,8 +14,22 @@ update_script () {
 	systemctl restart aftermath_blame_assigner.service' | ssh $1
 }
 
+update_systemd() {
+	echo 'systemctl stop aftermath_blame_assigner.service
+	systemctl disable aftermath_blame_assigner.service
+	rm /etc/systemd/system/aftermath_blame_assigner.service
+	systemctl daemon-reload
+	systemctl reset-failed
+	cd /opt/AftermathBlameAssigner
+	git pull
+	cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/
+	chmod 664 /etc/systemd/system/aftermath_blame_assigner.service
+	systemctl daemon-reload
+	systemctl enable aftermath_blame_assigner.service
+	systemctl restart aftermath_blame_assigner.service' | ssh $1
+}
+
 uninstall_script () {
-	
 	echo 'systemctl stop aftermath_blame_assigner.service
 	systemctl disable aftermath_blame_assigner.service
 	rm /etc/systemd/system/aftermath_blame_assigner.service
@@ -47,6 +61,8 @@ arg_parse () {
 	elif [[ $1 == "reinstall" ]]; then
 		uninstall_script $2
 		install_script $2
+	elif [[ $1 == "systemd" ]]; then
+		update_script $2
 	elif [[ $1 == "uninstall" ]]; then
 		uninstall_script $2
 	elif [[ $1 == "update" ]]; then
@@ -61,6 +77,7 @@ arg_parse () {
 		OPTIONS:
 			install - Installs Aftermath Blame Assigner on a Linux (CentOS/Ubuntu/Arch/etc) server
 			reinstall - Reinstalls Aftermath Blame Assigner on a Linux (CentOS/Ubuntu/Arch/etc) server
+			systemd - Updates the copy of Aftermath Blame Assigner and reinstalls the systemd service file
 			uninstall - Uninstalls Aftermath Blame Assigner from a Linux (CentOS/Ubuntu/Arch/etc) server	
 			update - Updates the copy of Aftermath Blame Assigner already installed on the server
 			"
