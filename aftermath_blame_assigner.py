@@ -92,7 +92,7 @@ def main():
 		server_ip = str(urllib.request.urlopen('http://icanhazip.com/').read().decode('utf8')[:-1])
 	except:
 		server_ip = "127.0.0.1"
-	sysinfo = 'echo "' + str(socket.gethostname()) + ' (' + server_ip + ') - SCRIPT RESTARTED" >> /var/log/aftermath_blame_assigner.log' 
+	sysinfo = 'echo "' + str(socket.gethostname()) + ' (' + server_ip + ') - SCRIPT RESTARTED" >> /var/log/aftermath_blame_assigner.log'  
 	#
 	subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	subprocess.call('echo "===========================================================================" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
