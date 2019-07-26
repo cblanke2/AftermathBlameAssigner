@@ -52,7 +52,7 @@ The _aba_remote.sh_ script can handle installation, reinstallation, uninstallati
 
 #### Uninstalling
 
-To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_ follow these instructions.
+To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_, either run  _aba_uninstall.sh_ or follow these instructions.
 * Uninstall the systemd service → `sudo systemctl stop aftermath_blame_assigner.service && sudo systemctl disable aftermath_blame_assigner.service && sudo rm /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl reset-failed`
 * Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
 * Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
