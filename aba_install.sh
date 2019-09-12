@@ -46,14 +46,14 @@ linux_distro (){
 				echo "This script is not compatible with Fedora 17x and below"
 				exit 1
 			fi
-		# CentOS/RHEL
-		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
-			if [[ $RHEL_VERSION -le 6 ]]; then
+		# CentOS/RHEL, CloudLinux, etc
+		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" || $DISTRO_BRANCH == "cloudlinux" ]]; then
+			if [[ $RHEL_VERSION -le 6 || $RHEL_VERSION == "6."* ]]; then
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
-			elif [[ $RHEL_VERSION -eq 7 ]]; then
+			elif [[ $RHEL_VERSION -eq 7 || $RHEL_VERSION == "7."* ]]; then
 				yum -y install epel-release git sysstat && yum -y install python36 python36-psutil
-			elif [[ $RHEL_VERSION -ge 8 ]]; then
+			elif [[ $RHEL_VERSION -ge 8 || $RHEL_VERSION == "8."* ]]; then
 				dnf -y install git python3 python3-psutil sysstat
 			fi
 		else
