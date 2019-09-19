@@ -48,7 +48,7 @@ linux_distro (){
 			fi
 		# CentOS/RHEL, CloudLinux, etc
 		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" || $DISTRO_BRANCH == "cloudlinux" ]]; then
-			if [[ $RHEL_VERSION -le 6 || $RHEL_VERSION == "6."* ]]; then
+			if [[ $RHEL_VERSION -le 6 || $RHEL_VERSION == [1-6]"."* ]]; then
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
 			elif [[ $RHEL_VERSION -eq 7 || $RHEL_VERSION == "7."* ]]; then
