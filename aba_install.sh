@@ -54,7 +54,7 @@ linux_distro (){
 			elif [[ $RHEL_VERSION -eq 7 || $RHEL_VERSION == "7."* ]]; then
 				yum -y install epel-release git sysstat && yum -y install python36 python36-psutil
 			elif [[ $RHEL_VERSION -ge 8 || $RHEL_VERSION == "8."* ]]; then
-				dnf -y install git python3 python3-psutil sysstat
+				dnf -y install gcc git python3 python36-devel sysstat && pip3 install psutil
 			fi
 		else
 			yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
