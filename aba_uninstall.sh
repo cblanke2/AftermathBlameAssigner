@@ -22,6 +22,7 @@ uninstall_centos () {
 			rpm -q python36-psutil && rpm -e python36 python36-libs python36-psutil epel-release
 		elif [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -ge 8 || $(echo $(source /etc/os-release && echo $VERSION_ID)) == "8."* ]]; then
 			rpm -e python3 python36-devel python3-libs
+		fi
 	fi
 	yum history sync
 	yum clean all
