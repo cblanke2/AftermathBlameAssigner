@@ -14,6 +14,7 @@ uninstall_centos () {
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" pip "* ]] && /usr/local/bin/pip3 uninstall -y pip
 		rpm -e python36-devel python36-libs python36 epel-release
 	else
+		if [[
 		rpm -q python36-psutil && rpm -e python36 python36-libs python36-psutil epel-release
 	fi
 	yum history sync
@@ -31,7 +32,7 @@ uninstall_general () {
 	rm /var/log/aftermath_blame_assigner.log
 	
 	if [[ $(echo $(source /etc/os-release && echo $ID)) == "centos" || $(echo $(source /etc/os-release && echo $ID)) == "rhel" ]]; then
-		if [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 ]]; then
+		if [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -ge 7 || $(echo $(source /etc/os-release && echo $VERSION_ID)) == [7-8]"."* ]]; then
 			uninstall_centos
 		fi
 	fi
