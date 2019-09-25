@@ -12,10 +12,16 @@ uninstall_centos () {
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" setuptools "* ]] &&  /usr/local/bin/pip3 uninstall -y setuptools
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" wheel "* ]] &&  /usr/local/bin/pip3 uninstall -y wheel
 		[[ $(echo $( /usr/local/bin/pip3 list --not-required)) == *" pip "* ]] && /usr/local/bin/pip3 uninstall -y pip
-		rpm -e python36-devel python36-libs python36 epel-release
+		if [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 || $(echo $(source /etc/os-release && echo $VERSION_ID)) == "7."* ]]; then
+			rpm -e python36-devel python36-libs python36 epel-release
+		elif [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -ge 8 || $(echo $(source /etc/os-release && echo $VERSION_ID)) == "8."* ]]; then
+			rpm -e python3 python36-devel python3-libs
+		fi
 	else
-		if [[
-		rpm -q python36-psutil && rpm -e python36 python36-libs python36-psutil epel-release
+		if [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -eq 7 || $(echo $(source /etc/os-release && echo $VERSION_ID)) == "7."* ]]; then
+			rpm -q python36-psutil && rpm -e python36 python36-libs python36-psutil epel-release
+		elif [[ $(echo $(source /etc/os-release && echo $VERSION_ID)) -ge 8 || $(echo $(source /etc/os-release && echo $VERSION_ID)) == "8."* ]]; then
+			rpm -e python3 python36-devel python3-libs
 	fi
 	yum history sync
 	yum clean all
