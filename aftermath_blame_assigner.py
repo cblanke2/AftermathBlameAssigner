@@ -6,12 +6,12 @@
 # Written by: Chris Blankenship <chrisb@reclaimhosting.com>
 #
 
-user_count = 5
-ps_count = 15
-cpu_max = 95
-ram_max = 95
-swap_max = 95
-log_time = 5
+user_count = 5 # The X users running the most processes
+ps_count = 15 # Top X intensive processes, sorted by CPU usage then by RAM usage
+cpu_max = 95 # Percent of CPU utilization to be considered "high"
+ram_max = 95 # Percent of RAM utilization to be considered "high"
+swap_max = 95 # Percent of Swap utilization to be considered "high"
+log_time = 5 # Seconds to wait between logging
 
 import psutil, socket, subprocess, time, urllib.request
 
@@ -36,7 +36,7 @@ def ps_log():
 	#
 	subprocess.call('echo "---------------------------------------------------------------------------" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
-	ps_count_log = 'ps -Aeo user,uid,pid,pcpu,pmem,start,time,comm,args=PATH --sort=-pcpu,-pmem | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
+	ps_count_log = 'ps -eo user,uid,pid,pcpu,pmem,start,time,comm,args=PATH | sort -r -k 4,5 | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
 	subprocess.call(ps_count_log, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
 	return 0
@@ -68,7 +68,7 @@ def monitor():
 			#
 			subprocess.call('echo "----" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 			#
-			# Prints current disk usage
+			# Prints current usage of disk mounted at root
 			disk_usage_echo = 'echo current disk usage: ' + str(psutil.disk_usage('/').percent) + '%  >> /var/log/aftermath_blame_assigner.log'
 			subprocess.call(disk_usage_echo, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 			#

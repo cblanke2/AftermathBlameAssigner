@@ -7,11 +7,12 @@
 #
 
 manual_install (){
-	echo "Your distro was not tested with this script, but you may be able to l the Aftermath Blame Assigner manually"
+	echo "Your distro was not tested with this script, but you may be able to install the Aftermath Blame Assigner manually"
 	echo ""
 	echo "Install these packages with your package manager: 'git python3 python3-psutil sysstat'"
 	echo ""
 	echo "If psutil isn't in your OS repos, install pip3, and run 'pip3 install psutil'"
+	echo "You will probably need gcc and the python3-dev package to build psutil"
 	echo ""
 	echo "Clone the repo from either"
 	echo "\t GitLab: 'cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"

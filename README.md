@@ -41,13 +41,13 @@ The _aba_remote.sh_ script can handle installation, reinstallation, uninstallati
 
 #### Check the log
 * The log is located at `/var/log/aftermath_blame_assigner.log`
-* The time and date of each reboot will be logged
+* The timestamps of the last server reboot and script restart will be logged
 * When CPU, RAM, or Swap utilization hits 95% (by default) these things will be logged every 5 seconds (by default):
     * The time and date
     * The current load of the CPU, RAM, and Swap
     * The current disk usage, as well as the current disk I/O in kB/s
-    * The 5 users running the most processes
-    * The 15 most intensive processes
+    * The 5 (by default) users running the most processes
+    * The 15 (by default) most intensive processes (sorted by CPU usage, then RAM usage)
 * This information should point you in the direction of what account and/or process is causing most of the problems. No automatic log removal exists (as of yet), so logs may pile up.
 
 #### Uninstalling
@@ -56,7 +56,4 @@ To uninstall Aftermath Blame Assigner after installing it with _aba_install.sh_,
 * Uninstall the systemd service → `sudo systemctl stop aftermath_blame_assigner.service && sudo systemctl disable aftermath_blame_assigner.service && sudo rm /etc/systemd/system/aftermath_blame_assigner.service && sudo systemctl daemon-reload && sudo systemctl reset-failed`
 * Remove the installation → `sudo rm -rf /opt/AftermathBlameAssigner`
 * Remove the log if desired → `sudo rm /var/log/aftermath_blame_assigner.log`
-* If pip3 was installed, remove any uneeded pip3 packages
-    * Run `sudo pip3 list --not-required` to list pip3 packages nothing depends on
-    * Then run `sudo pip3 uninstall -y <package-names>` to remove it/them
-* Remove any unneeded dependencies (this varies by OS)
+* Remove any unneeded dependencies (this varies by OS) if you want
