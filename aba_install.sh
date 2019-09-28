@@ -7,29 +7,35 @@
 #
 
 manual_install (){
-	echo "Your distro was not tested with this script, but you may be able to install the Aftermath Blame Assigner manually"
+	echo "Your OS was not tested with this script, but you should be able to install the Aftermath Blame Assigner manually"
 	echo ""
-	echo "Install these packages with your package manager: 'git python3 python3-psutil sysstat'"
+	echo "Ensure all the dependencies for the script are installed"
+	echo "Install bash, git, python3, and syssat if they aren't already installed"
+	echo "If python3-psutil is not in your OS repos, install gcc python3-dev python3-pip and install it through pip3"
 	echo ""
-	echo "If psutil isn't in your OS repos, install pip3, and run 'pip3 install psutil'"
-	echo "You will probably need gcc and the python3-dev package to build psutil"
+	echo "Install “Aftermath Blame Assigner” on the server in /opt/AftermathBlameAssigner"
+	echo "Some OSs don't have an /opt dir, so adjust these instructions where neded."
+	echo "Install the script by running → cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner"
+	echo "This repo is hosted on GitLab at https://gitlab.com/cblanke2/AftermathBlameAssigner"
+	echo "And mirrored on GitHub at https://github.com/cblanke2/AftermathBlameAssigner"
+	echo "Update the script by running →  cd /opt/AftermathBlameAssigner && git pull"
 	echo ""
-	echo "Clone the repo from either"
-	echo "\t GitLab: 'cd /opt && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
-	echo "or"
-	echo "\t GitHub: 'cd /opt && git clone https://github.com/cblanke2/AftermathBlameAssigner.git && cd /opt/AftermathBlameAssigner'"
+	echo "Set the script to run at reboot"
+	echo "Be sure to check where python3 is installed before doing this with which python3. Most of the time it's /usr/bin/python3, but sometimes it's /usr/local/bin/python3 (which may or may not be linked to /usr/bin/python3). Just double check and adjust the service file or crontab entry accordingly."
+	echo "Install and enable the systemd service file (This will work on any Linux distro with systemd)"
+	echo "cp ./aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service"
 	echo ""
-	echo "Set the script to run at reboot, using either cron or systemd"
-	echo "\tFor systemd, run this: 'cp ./aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service'"
-	echo "\tFor cron, run 'crontab -e' and add this line to the end: '@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &'"
+	echo "Or add an entry into crontab to run the script on reboot (This will work on most any UNIX-like OS, but not CentOS)"
+	echo "Run → crontab -e"
+	echo "Add this to the end of the file →  @reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &"
 	echo ""
-	echo "Then manually start the script"
-	echo "\tsystemd: 'systemctl restart aftermath_blame_assigner.service'"
-	echo "\tcron: 'python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &'"
+	echo "Manually start the script (or reboot the server)"
+	echo "If you used systemd → systemctl restart aftermath_blame_assigner.service"
+	echo "If you used cron → python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py &"
 	exit 1
 }
 
-linux_distro (){
+linux_install (){
 	#
 	# Install dependencies...
 	DISTRO_FAMILY=$(echo $(source /etc/os-release && echo $ID_LIKE))
@@ -93,15 +99,35 @@ linux_distro (){
 	systemctl restart aftermath_blame_assigner.service
 }
 
+bsd_install () {
+    #
+    # Install dependencies
+    pkg install -y python3 git
+    python3 -m ensurepip
+    pip3 install psutil
+    #
+    # Clone the repo from GitHub into ~/AftermathBlameAssigner
+    # cd ~ && git clone https://github.com/cblanke2/AftermathBlameAssigner.git
+    #
+    # Clone the repo from GitLab into ~/AftermathBlameAssigner
+    cd ~ && git clone https://gitlab.com/cblanke2/AftermathBlameAssigner.git
+    #
+    # Create a cronjob
+    echo $(crontab -l ; echo "@reboot `which python3` `echo $HOME`/AftermathBlameAssigner/aftermath_blame_assigner.py & ") | crontab -
+    #
+    # Start the script
+    python3 ~/AftermathBlameAssigner/aftermath_blame_assigner.py &
+}
+
 get_os () {
 	OS_TYPE=$(echo $(uname -s))
 	#
 	if [[ $OS_TYPE == *"Linux"* ]]; then
-		linux_distro
-	elif [[ $OS_TYPE == "Darwin" || $OS_TYPE == *"BSD"* ]]; then
-		echo "This script will, in theory, install on your OS. However, because it was written"
-		echo "with Linux in mind many features will not work. Feel free to edit the script to"
-		echo "make it work, but you will need to install it manually."
+		linux_install
+	elif [[ $OS_TYPE == "Darwin" || $OS_TYPE == *"SunOS"* ]]; then
+		manual_install
+	elif [[ $OS_TYPE == *"BSD"* ]]; then
+	    bsd_install
 	else
 		echo "This script was not tested on your OS, and it may not run at all."
 	fi

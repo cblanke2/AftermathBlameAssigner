@@ -17,12 +17,22 @@ uninstall_linux () {
 	hash -r
 }
 
+uninstall_bsd () {
+    kill `ps hax | grep AftermathBlameAssigner | grep python3 | awk ' {print $1} '`
+    crontab -l | grep -v AftermathBlameAssigner | crontab -
+    rm -rf `echo $HOME`/AftermathBlameAssigner
+    rm /var/log/aftermath_blame_assigner.log
+    hash -r
+}
+
 get_os () {
 	OS_TYPE=$(echo $(uname -s))
 	#
 	if [[ $OS_TYPE == *"Linux"* ]]; then
 		uninstall_linux
-	elif [[ $OS_TYPE == "Darwin" || $OS_TYPE == *"BSD"* ]]; then
+	elif [[ $OS_TYPE == *"BSD"* ]]; then
+	    uninstall_bsd
+	elif [[ $OS_TYPE == "Darwin" || $OS_TYPE == *"SunOS"* ]] then
 		echo "You will have to manually uninstall this script"
 	else
 		echo "This script was not tested on your OS."
