@@ -53,18 +53,28 @@ linux_install (){
 				echo "This script is not compatible with Fedora 17x and below"
 				exit 1
 			fi
-		# CentOS/RHEL, CloudLinux, etc
-		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" || $DISTRO_BRANCH == "cloudlinux" ]]; then
-			if [[ $RHEL_VERSION -le 6 || $RHEL_VERSION == [1-6]"."* ]]; then
+		# CloudLinux
+		elif [[ $DISTRO_BRANCH == "cloudlinux" ]]; then
+			if [[ $RHEL_VERSION == [1-6]"."* ]]; then
+				echo "This script is not compatible with CloudLinux 6x and below"
+				exit 1
+			elif [[ $RHEL_VERSION == 7"."*  ]]; then
+				yum -y install epel-release git sysstat && yum -y --enablerepo=epel --disablerepo=cloudlinux-x86_64-server-7 install python36 python36-psutil
+			elif [[ $RHEL_VERSION == 8"."* ]]; then
+				yum -y --disablerepo=cloudlinux-x86_64-server-8 install gcc git python3 python36-devel sysstat && pip3 install psutil
+			fi
+		# CentOS/RHEL, etc
+		elif [[ $DISTRO_BRANCH == "centos" || $DISTRO_BRANCH == "rhel" ]]; then
+			if [[ $RHEL_VERSION -le 6 ]]; then
 				echo "This script is not compatible with CentOS/RHEL 6x and below"
 				exit 1
-			elif [[ $RHEL_VERSION -eq 7 || $RHEL_VERSION == "7."* ]]; then
+			elif [[ $RHEL_VERSION -eq 7 ]]; then
 				yum -y install epel-release git sysstat && yum -y install python36 python36-psutil
-			elif [[ $RHEL_VERSION -ge 8 || $RHEL_VERSION == "8."* ]]; then
+			elif [[ $RHEL_VERSION -ge 8 ]]; then
 				dnf -y install gcc git python3 python36-devel sysstat && pip3 install psutil
 			fi
 		else
-			yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
+				yum -y install gcc git python3 python3-devel python3-pip sysstat && pip3 install psutil
 		fi
 	#
 	# For debian-like distros

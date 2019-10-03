@@ -8,18 +8,7 @@
 
 
 update_script () {
-	echo 'systemctl stop aftermath_blame_assigner.service
-	systemctl disable aftermath_blame_assigner.service
-	rm /etc/systemd/system/aftermath_blame_assigner.service
-	systemctl daemon-reload
-	systemctl reset-failed
-	cd /opt/AftermathBlameAssigner
-	git pull
-	cp /opt/AftermathBlameAssigner/aftermath_blame_assigner.service /etc/systemd/system/
-	chmod 664 /etc/systemd/system/aftermath_blame_assigner.service
-	systemctl daemon-reload
-	systemctl enable aftermath_blame_assigner.service
-	systemctl restart aftermath_blame_assigner.service' | ssh $1
+	curl https://gitlab.com/cblanke2/AftermathBlameAssigner/raw/master/aba_update.sh | ssh $1
 }
 
 uninstall_script () {
@@ -49,10 +38,10 @@ arg_parse () {
 			proper privileges, you should run into no issues.
 		
 		OPTIONS:
-			install - Installs Aftermath Blame Assigner (Linux or BSD)
-			reinstall - Reinstalls Aftermath Blame Assigner (Linux or BSD)
-			uninstall - Uninstalls Aftermath Blame Assigner (Linux or BSD)	
-			update - Updates the installation of Aftermath Blame Assigner  (Linux only)
+			install - Installs Aftermath Blame Assigner
+			reinstall - Reinstalls Aftermath Blame Assigner
+			uninstall - Uninstalls Aftermath Blame Assigner	
+			update - Updates the installation of Aftermath Blame Assigner
 			"
 	fi
 }
