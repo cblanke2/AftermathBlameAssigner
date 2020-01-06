@@ -1,6 +1,6 @@
 # Aftermath Blame Assigner
 
-The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script for logging resource intensive processes on Linux servers, written in Python3. The script partiall supports other UNIX-like OSs, primarily FreeBSD, but some features (such as logging Disk I/O) do not work on these systems.
+The Aftermath Blame Assigner (_aftermath_blame_assigner.py_) is a simple script for logging resource intensive processes on Linux servers, written in Python3. The script partially supports other UNIX-like OSs, primarily FreeBSD, but some features (such as logging Disk I/O) do not work on these systems.
 
 #### Automatic Installlation
 The installation of Aftermath Blame Assigner on **CentOS 7x+**, **Ubuntu 18x+**, **Manjaro 18x+**, and **FreeBSD 12x+** can be automated using the _aba_install.sh_ bash script. There should be no issues running the install script on (up to date) distros closely related to **CentOS**, **Ubuntu**, **Manjaro**, and **FreeBSD** (such as as **RHEL**, **Debian**, **Arch**, etc.), but this has not been extensively tested.
@@ -23,7 +23,7 @@ The _aba_remote.sh_ script can handle installation, reinstallation, uninstallati
     * Be sure to check where python3 is installed before doing this with `which python3`. Most of the time it's `/usr/bin/python3`, but sometimes it's `/usr/local/bin/python3` (which may or may not be linked to `/usr/bin/python3`). Just double check and adjust the service file or crontab entry accordingly. 
     * Install and enable the systemd service file _(This will work on any Linux distro with systemd)_
         * `cp ./aftermath_blame_assigner.service /etc/systemd/system/ && chmod 664 /etc/systemd/system/aftermath_blame_assigner.service && systemctl daemon-reload && systemctl enable aftermath_blame_assigner.service`
-    * Or add an entry into crontab to run the script on reboot _(This will work on most any UNIX-like OS, but not CentOS)_
+    * Or add an entry into crontab to run the script on reboot _(This is not comprable to running the script as a systemd service -- some code to get this script to function with other init systems may be written later on, but this is **not a priority** by any means for a few reasons and having it run as a cronjob works well-ish enough not really kind of)_
         * Run → `crontab -e`
         * Add this to the end of the file →  `@reboot /usr/bin/python3 /opt/AftermathBlameAssigner/aftermath_blame_assigner.py & `
 * Manually start the script (or reboot the server)
@@ -47,7 +47,8 @@ The _aba_remote.sh_ script can handle installation, reinstallation, uninstallati
     * The current load of the CPU, RAM, and Swap
     * The current disk usage, as well as the current disk I/O in kB/s
     * The 5 (by default) users running the most processes
-    * The 15 (by default) most intensive processes (sorted by CPU usage, then RAM usage)
+    * The 15 (by default) most CPU intensive processes
+    * The 15 (by default) most Memory intensive processes
 * This information should point you in the direction of what account and/or process is causing most of the problems. No automatic log removal exists (as of yet), so logs may pile up.
 
 #### Uninstalling

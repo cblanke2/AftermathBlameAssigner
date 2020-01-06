@@ -35,7 +35,7 @@ get_os () {
 	elif [[ $OS_TYPE == "Darwin" || $OS_TYPE == *"SunOS"* ]] then
 		echo "You will have to manually uninstall this script"
 	else
-		echo "This script was not tested on your OS."
+		echo "This script was not tested on your OS, please uninstall manually."
 	fi
 	#
 	exit 0

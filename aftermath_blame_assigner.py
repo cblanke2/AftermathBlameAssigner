@@ -7,7 +7,7 @@
 #
 
 user_count = 5 # The X users running the most processes
-ps_count = 15 # Top X intensive processes, sorted by CPU usage then by RAM usage
+ps_count = 15 # Top X intensive processes (by both CPU and RAM usage)
 cpu_max = 95 # Percent of CPU utilization to be considered "high"
 ram_max = 95 # Percent of RAM utilization to be considered "high"
 swap_max = 95 # Percent of Swap utilization to be considered "high"
@@ -28,16 +28,29 @@ def user_log():
 	#
 	return 0
 
-def ps_log():
+def cpu_log():
 	#
-	# Logs the most intensive processes
-	ps_count_echo = 'echo THE ' + str(ps_count) + ' MOST RESOURCE INTENSIVE PROCESSES >> /var/log/aftermath_blame_assigner.log'
-	subprocess.call(ps_count_echo, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
+	# Logs the most memory intensive processes
+	cpu_count_echo = 'echo THE ' + str(ps_count) + ' MOST CPU INTENSIVE PROCESSES >> /var/log/aftermath_blame_assigner.log'
+	subprocess.call(cpu_count_echo, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
 	subprocess.call('echo "---------------------------------------------------------------------------" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
-	ps_count_log = 'ps -eo user,uid,pid,pcpu,pmem,start,time,comm,args=PATH | sort -r -k 4,5 | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
-	subprocess.call(ps_count_log, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
+	cpu_count_log = 'ps -eo user,uid,pid,pcpu,pmem,start,time,comm,args=PATH --sort=-pcpu | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
+	subprocess.call(cpu_count_log, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
+	#
+	return 0
+
+def mem_log():
+	#
+	# Logs the most memory intensive processes
+	mem_count_echo = 'echo THE ' + str(ps_count) + ' MOST MEMORY INTENSIVE PROCESSES >> /var/log/aftermath_blame_assigner.log'
+	subprocess.call(mem_count_echo, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
+	#
+	subprocess.call('echo "---------------------------------------------------------------------------" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
+	#
+	mem_count_log = 'ps -eo user,uid,pid,pcpu,pmem,start,time,comm,args=PATH --sort=-pmem | head -n ' + str(ps_count + 1) + ' >> /var/log/aftermath_blame_assigner.log'
+	subprocess.call(mem_count_log, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 	#
 	return 0
 
@@ -81,7 +94,10 @@ def monitor():
 			subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 			user_log()
 			subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
-			ps_log()
+			cpu_log()
+			subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
+			mem_log()
+			subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 			subprocess.call('echo "===========================================================================" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 			subprocess.call('echo "" >> /var/log/aftermath_blame_assigner.log', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell = True)
 		time.sleep(log_time)
